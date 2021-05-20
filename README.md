@@ -31,7 +31,9 @@ How to use:
 
 7) Copy the folder path that have all the shuffled images and put it in the first box.
 
-8) Copy the folder path that you want to save the reordered images too.
+8) Copy the folder path that you want to save the reordered images too. 
+
+Note: if the 2 boxes are not filled with a correct path and the button got pressed, the application will crash and you have to rerun it.
 
 9) And...Press the button and enjoy.
  

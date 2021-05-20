@@ -1,0 +1,105 @@
+<html>
+<head>
+<title>Form1.cs</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #d55fde; font-style: italic;}
+.s1 { color: #bbbbbb;}
+.s2 { color: #89ca78;}
+.s3 { color: #d19a66;}
+.s4 { color: #5c6370; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#282c34">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Form1.cs</font>
+</center></td></tr></table>
+<pre><span class="s0">using </span><span class="s1">System;</span>
+<span class="s0">using </span><span class="s1">System.Collections.Generic;</span>
+<span class="s0">using </span><span class="s1">System.Drawing;</span>
+<span class="s0">using </span><span class="s1">System.IO;</span>
+<span class="s0">using </span><span class="s1">System.Linq;</span>
+<span class="s0">using </span><span class="s1">System.Windows.Forms;</span>
+
+<span class="s0">namespace </span><span class="s1">DycreptMagazinePages</span>
+<span class="s1">{</span>
+    <span class="s0">public </span><span class="s1">partial </span><span class="s0">class </span><span class="s1">Form1 : Form</span>
+    <span class="s1">{</span>
+        <span class="s0">public string </span><span class="s1">SearchPath;</span>
+        <span class="s0">public string </span><span class="s1">SavePath;</span>
+
+        <span class="s0">public int </span><span class="s1">PageNumber;</span>
+        
+        <span class="s0">public </span><span class="s1">Form1()</span>
+        <span class="s1">{</span>
+            <span class="s1">InitializeComponent();</span>
+        <span class="s1">}</span>
+
+        <span class="s0">private void </span><span class="s1">button1_Click(</span><span class="s0">object </span><span class="s1">sender, EventArgs e)</span>
+        <span class="s1">{</span>
+            <span class="s1">SearchPath = textBox1.Text;</span>
+            <span class="s1">SavePath = textBox2.Text;</span>
+
+            <span class="s1">var images = Directory.EnumerateFiles(</span><span class="s2">$@&quot;{</span><span class="s1">SearchPath</span><span class="s2">}&quot;</span><span class="s1">, </span><span class="s2">&quot;*.*&quot;</span><span class="s1">, SearchOption.AllDirectories)</span>
+                <span class="s1">.Where(s =&gt; s.EndsWith(</span><span class="s2">&quot;.png&quot;</span><span class="s1">) || s.EndsWith(</span><span class="s2">&quot;.jpg&quot;</span><span class="s1">));</span>
+            
+            <span class="s0">foreach </span><span class="s1">(var image </span><span class="s0">in </span><span class="s1">images)</span>
+            <span class="s1">{</span>
+                <span class="s1">List&lt;Bitmap&gt; imageParts = </span><span class="s0">new </span><span class="s1">List&lt;Bitmap&gt;();</span>
+                <span class="s1">Bitmap bitmap = </span><span class="s0">new </span><span class="s1">Bitmap(image);</span>
+
+                <span class="s1">var gridBoxWidth = bitmap.Width / </span><span class="s3">4</span><span class="s1">;</span>
+                <span class="s1">var gridBoxHeight = bitmap.Height / </span><span class="s3">4</span><span class="s1">;</span>
+
+                <span class="s1">var Xoffset = </span><span class="s3">0</span><span class="s1">;</span>
+                <span class="s0">int </span><span class="s1">Yoffset;</span>
+                
+                <span class="s4">//Read the image parts</span>
+                <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">x = </span><span class="s3">0</span><span class="s1">; x &lt; </span><span class="s3">4</span><span class="s1">; x++)</span>
+                <span class="s1">{</span>
+                    <span class="s1">Yoffset = </span><span class="s3">0</span><span class="s1">;</span>
+                    <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">y = </span><span class="s3">0</span><span class="s1">; y &lt; </span><span class="s3">4</span><span class="s1">; y++)</span>
+                    <span class="s1">{</span>
+                        <span class="s1">Bitmap partBitmap = bitmap.Clone(</span><span class="s0">new </span><span class="s1">Rectangle(Xoffset, Yoffset, gridBoxWidth, gridBoxHeight), bitmap.PixelFormat);</span>
+
+                        <span class="s1">imageParts.Add(partBitmap);</span>
+
+                        <span class="s1">Yoffset += gridBoxHeight;</span>
+                    <span class="s1">}</span>
+
+                    <span class="s1">Xoffset += gridBoxWidth;</span>
+                <span class="s1">}</span>
+                
+                <span class="s4">//Reorder and draw the image parts</span>
+                <span class="s1">Bitmap newBitmap = </span><span class="s0">new </span><span class="s1">Bitmap(bitmap.Width, bitmap.Height);</span>
+
+                <span class="s1">Yoffset = </span><span class="s3">0</span><span class="s1">;</span>
+
+                <span class="s0">using </span><span class="s1">(var graphics = Graphics.FromImage(newBitmap))</span>
+                <span class="s1">{</span>
+                    <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">y = </span><span class="s3">0</span><span class="s1">; y &lt; </span><span class="s3">4</span><span class="s1">; y++)</span>
+                    <span class="s1">{</span>
+                        <span class="s1">Xoffset = </span><span class="s3">0</span><span class="s1">;</span>
+                        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">x = </span><span class="s3">0</span><span class="s1">; x &lt; </span><span class="s3">4</span><span class="s1">; x++)</span>
+                        <span class="s1">{</span>
+                            <span class="s1">graphics.DrawImage(imageParts[x + y * </span><span class="s3">4</span><span class="s1">], </span><span class="s0">new </span><span class="s1">Rectangle(Xoffset, Yoffset, gridBoxWidth, gridBoxHeight));</span>
+
+                            <span class="s1">Xoffset += gridBoxWidth;</span>
+                        <span class="s1">}</span>
+
+                        <span class="s1">Yoffset += gridBoxHeight;</span>
+                    <span class="s1">}</span>
+                <span class="s1">}</span>
+                
+                <span class="s4">//Save the bitmap to a new image</span>
+                <span class="s1">PageNumber++;</span>
+                <span class="s1">newBitmap.Save(</span><span class="s2">$@&quot;{</span><span class="s1">SavePath</span><span class="s2">}\{</span><span class="s1">PageNumber</span><span class="s2">}.png&quot;</span><span class="s1">);</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

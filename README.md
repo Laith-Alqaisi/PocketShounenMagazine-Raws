@@ -8,7 +8,7 @@ Made by the translator of the "Itsafineday" scans group to be able to scan high 
 ![Reorder Example](https://user-images.githubusercontent.com/32362046/119033582-0d1b2000-b9b6-11eb-8cf6-e302f3a39121.png)
 
 ------------------------------
-It can also work to shuffle normal images
+It can also work to shuffle normal images (Source: Ladica, Shadowverse.)
 ![NExample](https://user-images.githubusercontent.com/32362046/119096137-df68c200-ba1b-11eb-8e8b-c00b3a9fde4b.png)
 
 ------------------------------
@@ -17,7 +17,7 @@ Only works on windows because it's based on winforms but the logic itself is tri
 
 How to use:
 
-1) Open the chapter you want to download and press Ctrl+Shift+I to open the inspect tools.
+1) Open the chapter you want in https://pocket.shonenmagazine.com/ to download and press Ctrl+Shift+I to open the inspect tools.
 
 2) Open up the "Application" tab then go to frames > top > Images, and choose the image you want then right click and "save image as".
 
@@ -40,6 +40,4 @@ How to use:
 
 Note: if the 2 boxes are not filled with a correct path and the button got pressed, the application will crash and you have to rerun it.
 
-9) And...Press the button and enjoy.
- 
-
+9) And...Press the button and enjoy. 

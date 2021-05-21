@@ -1,12 +1,17 @@
 # PSM-Reorder-raws
 A script that reorders the downloaded pages that's shuffled from the pocket shounen magazine website and saves them as a high quality png file.
 
-Made by the translator of the "Itsafineday" scans group that scans Bokutachi no remake(remake our life!) manga.
+Made by the translator of the "Itsafineday" scans group to be able to scan high quality raws for Bokutachi no remake.
 
 ![Reorder Example 0](https://user-images.githubusercontent.com/32362046/119033532-fd9bd700-b9b5-11eb-86bd-3c79e89567c7.png)
 
 ![Reorder Example](https://user-images.githubusercontent.com/32362046/119033582-0d1b2000-b9b6-11eb-8cf6-e302f3a39121.png)
 
+------------------------------
+It can also work to shuffle normal images
+![NExample](https://user-images.githubusercontent.com/32362046/119096137-df68c200-ba1b-11eb-8e8b-c00b3a9fde4b.png)
+
+------------------------------
 
 Only works on windows because it's based on winforms but the logic itself is trivial to convert to any other type of applications.
 

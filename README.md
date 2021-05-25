@@ -26,20 +26,23 @@ How to use:
 ![ExamplePSMRO](https://user-images.githubusercontent.com/32362046/119030943-31293200-b9b3-11eb-95de-6972c2ddf8d0.jpg)
 ![Screenshot_1257](https://user-images.githubusercontent.com/32362046/119030502-a3e5dd80-b9b2-11eb-8fce-d5cd6d30f2b4.png)
 
-3) Rename the Image to the page number you want, then change the file name extension to ".png" and put it in the folder you want.
-
-4) After you downloaded all the pages and put them in the same folder, you can now start converting them.
-
-5) Open up the .sln file in your visual studio or rider(or any IDE that accepts winforms applications made with C#). 
+3) Open up the .sln file in your visual studio or rider(or any IDE that accepts winforms applications made with C#). 
 ![Screenshot_1262](https://user-images.githubusercontent.com/32362046/119032518-ee685980-b9b4-11eb-9fe9-9d8f535e220d.png)
 
-6) Build and run the application. You will probably see something like this
-![Screenshot_1263](https://user-images.githubusercontent.com/32362046/119032943-5b7bef00-b9b5-11eb-895d-8c72fccab416.png)
+4) Build and run the application.
 
-7) Copy the folder path that have all the shuffled images and put it in the first box.
+5)Put all the downloaded files in a folder.
 
-8) Copy the folder path that you want to save the reordered images to. 
+6) Copy the folder path that have all the downloaded files and put it in the first box.
 
-Note: if the 2 boxes are not filled with a correct path and the button got pressed, the application will crash and you have to rerun it.
+7) Copy the folder path that you want to save the reordered images to. 
 
-9) And...Press the button and enjoy. 
+8) Press the "Rename and convert to png" button.
+
+9) You can now start reording them, press the "Reorder and save" button.
+
+10) After it's done, open up the folder you save the reordered images in, and rename each page in the right order depending on the chapter(there is no way to automate this accurately).
+
+11) Enjoy.
+
+Note: if the 2 boxes are not filled with a correct path and the button got pressed, the application may crash and you have to rerun it(if you built it in rider, then just press continue).

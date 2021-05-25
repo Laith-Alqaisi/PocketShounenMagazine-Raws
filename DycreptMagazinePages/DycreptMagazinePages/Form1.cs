@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace DycreptMagazinePages
@@ -12,8 +14,6 @@ namespace DycreptMagazinePages
         public string SearchPath;
         public string SavePath;
 
-        public int PageNumber;
-        
         public Form1()
         {
             InitializeComponent();
@@ -21,14 +21,15 @@ namespace DycreptMagazinePages
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SearchPath = textBox1.Text;
-            SavePath = textBox2.Text;
+            SearchPath = SearchPathTextBox.Text;
+            SavePath = SavePathTextBox.Text;
 
             var images = Directory.EnumerateFiles($@"{SearchPath}", "*.*", SearchOption.AllDirectories)
                 .Where(s => s.EndsWith(".png") || s.EndsWith(".jpg"));
-            
+
             foreach (var image in images)
             {
+                FileInfo imageFileInfo = new FileInfo(image);
                 List<Bitmap> imageParts = new List<Bitmap>();
                 Bitmap bitmap = new Bitmap(image);
 
@@ -37,7 +38,7 @@ namespace DycreptMagazinePages
 
                 var Xoffset = 0;
                 int Yoffset;
-                
+
                 //Read the image parts
                 for (int x = 0; x < 4; x++)
                 {
@@ -53,7 +54,7 @@ namespace DycreptMagazinePages
 
                     Xoffset += gridBoxWidth;
                 }
-                
+
                 //Reorder and draw the image parts
                 Bitmap newBitmap = new Bitmap(bitmap.Width, bitmap.Height);
 
@@ -74,11 +75,50 @@ namespace DycreptMagazinePages
                         Yoffset += gridBoxHeight;
                     }
                 }
-                
+
                 //Save the bitmap to a new image
-                PageNumber++;
-                newBitmap.Save($@"{SavePath}\{PageNumber}.png");
+                newBitmap.Save($@"{SavePath}\{imageFileInfo.Name}.png");
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SearchPath = SearchPathTextBox.Text;
+
+            var files = Directory.EnumerateFiles($@"{SearchPath}");
+
+            int charIndex = 65; //ASCII code, 65 = A, 66 = B,...., 90 = Z.
+            int index = 0;
+            
+            foreach (var file in files)
+            {
+                FileInfo myFileInfo = new FileInfo(file);
+                
+                File.Move(file, SearchPath + $@"\{(char)charIndex}{index}" + ".png");
+                
+                index++;
+                if (index > 99)
+                {
+                    charIndex++;
+                    index = 0;
+                }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            int StartingPageNumber = int.Parse(SPNumberTextBox.Text);
+            int EndingPageNumber = int.Parse(EPNumberTextBox.Text);
+
+            string DocString = $"{StartingPageNumber}-{EndingPageNumber} ({EndingPageNumber - StartingPageNumber + 1}pages)\n\n";
+            
+            for (int i = StartingPageNumber; i <= EndingPageNumber; i++)
+            {
+                DocString += $"Page {i}: \n\n";
+            }
+            
+            Clipboard.SetText(DocString);
+        }
+        
     }
 }

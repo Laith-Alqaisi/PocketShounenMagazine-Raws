@@ -7,3 +7,4 @@ C:\Users\DrivZone\RiderProjects\DycreptMagazinePages\DycreptMagazinePages\obj\Re
 C:\Users\DrivZone\RiderProjects\DycreptMagazinePages\DycreptMagazinePages\obj\Release\DycreptMagazinePages.csproj.CoreCompileInputs.cache
 C:\Users\DrivZone\RiderProjects\DycreptMagazinePages\DycreptMagazinePages\obj\Release\DycreptMagazinePages.exe
 C:\Users\DrivZone\RiderProjects\DycreptMagazinePages\DycreptMagazinePages\obj\Release\DycreptMagazinePages.pdb
+C:\Users\DrivZone\RiderProjects\DycreptMagazinePages\DycreptMagazinePages\obj\Release\DycreptMagazinePages.csprojAssemblyReference.cache

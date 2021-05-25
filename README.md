@@ -15,7 +15,7 @@ It can also work to shuffle normal images (Source: Ladica, Shadowverse.)
 
 Only works on windows because it's based on winforms but the logic itself is trivial to convert to any other type of applications.
 
-Only accepts .jpg and .png files
+Only accepts .jpg and .png files when reordering.
 
 How to use:
 

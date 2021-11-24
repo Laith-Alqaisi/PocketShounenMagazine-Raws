@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace DycreptMagazinePages
@@ -19,13 +19,14 @@ namespace DycreptMagazinePages
             InitializeComponent();
         }
 
+        //PocketShounen
         private void button1_Click(object sender, EventArgs e)
         {
             SearchPath = SearchPathTextBox.Text;
             SavePath = SavePathTextBox.Text;
 
             var images = Directory.EnumerateFiles($@"{SearchPath}", "*.*", SearchOption.AllDirectories)
-                .Where(s => s.EndsWith(".png") || s.EndsWith(".jpg"));
+                .Where(s => s.EndsWith(".png") || s.EndsWith(".jpg") || s.EndsWith(".jfif") || s.EndsWith(".jpeg"));
 
             foreach (var image in images)
             {
@@ -45,7 +46,7 @@ namespace DycreptMagazinePages
                     Yoffset = 0;
                     for (int y = 0; y < 4; y++)
                     {
-                        Bitmap partBitmap = bitmap.Clone(new Rectangle(Xoffset, Yoffset, gridBoxWidth, gridBoxHeight), bitmap.PixelFormat);
+                        Bitmap partBitmap = bitmap.Clone(new RectangleF(Xoffset, Yoffset, gridBoxWidth, gridBoxHeight), bitmap.PixelFormat);
 
                         imageParts.Add(partBitmap);
 
@@ -67,7 +68,7 @@ namespace DycreptMagazinePages
                         Xoffset = 0;
                         for (int x = 0; x < 4; x++)
                         {
-                            graphics.DrawImage(imageParts[x + y * 4], new Rectangle(Xoffset, Yoffset, gridBoxWidth, gridBoxHeight));
+                            graphics.DrawImage(imageParts[x + y * 4], new RectangleF(Xoffset, Yoffset, gridBoxWidth, gridBoxHeight));
 
                             Xoffset += gridBoxWidth;
                         }
@@ -119,6 +120,66 @@ namespace DycreptMagazinePages
             
             Clipboard.SetText(DocString);
         }
-        
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        //ComicDays, igorquintaes
+        private void button4_Click(object sender, EventArgs e)
+        {
+            SearchPath = SearchPathTextBox.Text;
+            SavePath = SavePathTextBox.Text;
+
+            var images = Directory.EnumerateFiles($@"{SearchPath}", "*.*", SearchOption.AllDirectories)
+                .Where(s => s.EndsWith(".png") || s.EndsWith(".jpg") || s.EndsWith(".jfif") || s.EndsWith(".jpeg"));
+
+            foreach(var image in images)
+            {
+                FileInfo imageFileInfo = new FileInfo(image);
+                List<Bitmap> imageParts = new List<Bitmap>();
+                Bitmap bitmap = new Bitmap(image);
+                Bitmap newBitmap = new Bitmap(bitmap.Width, bitmap.Height);
+
+                var gridBoxWidth = (int)Math.Floor((double)(bitmap.Width / 32)) * 8;
+                var gridBoxHeight = (int)Math.Floor((double)(bitmap.Height / 32)) * 8;
+
+                //Read, reorder and draw the image parts
+                for (var x = 0; x + gridBoxWidth <= bitmap.Width; x += gridBoxWidth)
+                {
+                    for (var y = (x / gridBoxWidth) * gridBoxHeight + gridBoxHeight;  y + gridBoxHeight <= bitmap.Height; y += gridBoxHeight)
+                    {
+                        var rectOldPosition = new Rectangle(x, y, gridBoxWidth, gridBoxHeight);
+                        var partBitmapOldPosition = bitmap.Clone(rectOldPosition, PixelFormat.DontCare);
+
+                        var newPositionX = (y / gridBoxHeight) * gridBoxWidth;
+                        var newPositionY = (x / gridBoxWidth) * gridBoxHeight;
+                        var rectNewPosition = new Rectangle(newPositionX, newPositionY, gridBoxWidth, gridBoxHeight);
+                        var partBitmapNewPosition = bitmap.Clone(rectNewPosition, PixelFormat.DontCare);
+
+                        var graphics = Graphics.FromImage(newBitmap);
+
+                        graphics.DrawImage(partBitmapNewPosition, new Point(x, y));
+                        graphics.DrawImage(partBitmapOldPosition, new Point(newPositionX, newPositionY));
+                    }
+                }
+
+                //Fill up the missing middle parts, credits to igorquintaes for this.
+                for (var middleLine = 0; middleLine < 4; middleLine++)
+                {
+                    var middleLineX = middleLine * gridBoxWidth;
+                    var middleLineY = middleLine * gridBoxHeight;
+                    var rectMiddleLine = new Rectangle(middleLineX, middleLineY, gridBoxWidth, gridBoxHeight);
+                    var ImageMiddleLine = bitmap.Clone(rectMiddleLine, PixelFormat.DontCare);
+
+                    var graphics = Graphics.FromImage(newBitmap);
+                    graphics.DrawImage(ImageMiddleLine, new Point(middleLineX, middleLineY));
+                }
+
+                //Save the bitmap to a new image
+                newBitmap.Save($@"{SavePath}\{imageFileInfo.Name}.png");
+            }
+        }
     }
 }

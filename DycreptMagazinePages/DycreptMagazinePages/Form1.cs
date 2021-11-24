@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -93,8 +92,6 @@ namespace DycreptMagazinePages
             
             foreach (var file in files)
             {
-                FileInfo myFileInfo = new FileInfo(file);
-                
                 File.Move(file, SearchPath + $@"\{(char)charIndex}{index}" + ".png");
                 
                 index++;
@@ -126,7 +123,7 @@ namespace DycreptMagazinePages
 
         }
 
-        //ComicDays, igorquintaes
+        //ComicDays
         private void button4_Click(object sender, EventArgs e)
         {
             SearchPath = SearchPathTextBox.Text;
@@ -138,7 +135,6 @@ namespace DycreptMagazinePages
             foreach(var image in images)
             {
                 FileInfo imageFileInfo = new FileInfo(image);
-                List<Bitmap> imageParts = new List<Bitmap>();
                 Bitmap bitmap = new Bitmap(image);
                 Bitmap newBitmap = new Bitmap(bitmap.Width, bitmap.Height);
 

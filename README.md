@@ -1,7 +1,7 @@
-# PSM-Reorder-raws
-A pretty simple script that reorders the downloaded pages that's shuffled from the pocket shounen magazine website and saves them as HQ png files.
+# PSM/ComicDays-Reorder-raws
+A pretty simple script that reorders the downloaded pages that's shuffled from the pocket shounen magazine or Comic days websites and saves them as png files.
 
-Made for my scan group to be able to get HQ raws for "Bokutachi no remake".
+Made for my scan group to be able to get HQ raws for "Bokutachi no remake" and such.
 
 ![Reorder Example 0](https://user-images.githubusercontent.com/32362046/119033532-fd9bd700-b9b5-11eb-86bd-3c79e89567c7.png)
 
